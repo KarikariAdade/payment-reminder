@@ -21,6 +21,7 @@ model Users {
   password       String
   created_at     DateTime          @default(now())
   PasswordResets Password_Resets[]
+  Customers      Customers[]
 }
 
 model Password_Resets {
@@ -31,4 +32,14 @@ model Password_Resets {
   is_used    Boolean   @default(false)
   expiration DateTime?
   token      String    @default(uuid())
+}
+
+model Customers {
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String? @unique
+  phone     String?
+  address   String?
+  user_id   Int
+  belongsTo Users   @relation(fields: [user_id], references: [id])
 }

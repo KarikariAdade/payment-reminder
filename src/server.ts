@@ -2,6 +2,7 @@ import express, {Express, Request, Response} from 'express';
 import morgan from 'morgan';
 import publicRouter from "./routes/public.route";
 import passport from "./services/passport";
+import securedRoute from "./routes/secured.route";
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.use('/api', publicRouter);
+app.use('/api', securedRoute)
 
 export default app
