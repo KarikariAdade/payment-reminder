@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import nodemailer, {SentMessageInfo} from 'nodemailer'
 import Mail from "nodemailer/lib/mailer";
+import {validationResult} from "express-validator";
 
 export const generateResponse = (type:string, message:string, data:any) => {
 
@@ -57,3 +58,11 @@ export const generateDate = (selectedDate: Date, reverseToFormInput = false) => 
         return `${year}-${month}-${day}`;
     }
 }
+
+export const handleValidationErrors = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(401).json({ errors: errors.array() });
+    }
+    next();
+};

@@ -8,6 +8,7 @@ import {validationResult} from "express-validator";
 import bcrypt from "bcrypt";
 import {Users} from "@prisma/client";
 import {sendEmail} from "../services/mailconfig";
+import {emailQueue} from "../queues/queue.setup";
 
 export const createUser = async (req:Request, res:Response) => {
 
@@ -70,7 +71,7 @@ export const loginUser = async (req: Request, res: Response) => {
             return res.json(generateResponse('error', 'Invalid credentials', null))
 
         const payload = {id: user.id, uuid: user.uuid},
-            token = jwt.sign(payload, jwtSecret, {expiresIn: '1h'})
+            token = jwt.sign(payload, jwtSecret, {expiresIn: '1D'})
 
         res.json(generateResponse('success', 'User logged in successfully', {user: user, token: token}))
 
@@ -107,15 +108,16 @@ export const forgotPassword = async (req: Request, res: Response) => {
             if (passwordReset) {
                 console.log("OTP sent to", user.email, "is", otp)
 
-                const context = {
-                    name: user.name,
-                    otp: otp,
-                    expiration: expiration.toISOString().slice(0, 19).replace('T','')
-                }
-
-                console.log('context', context)
-
-                await sendEmail(user.email, "Password Reset Email", "accountCreationTemplate", context);
+                await emailQueue.add('sendEmail', {
+                    to: user.email,
+                    subject: "Password Reset Email",
+                    template: "accountCreationTemplate",
+                    context: {
+                        name: user.name,
+                        otp: otp,
+                        expiration: expiration.toISOString().slice(0, 19).replace('T','')
+                    }
+                }, {removeOnComplete: true})
 
                 return res.json(generateResponse('success', 'Password reset email sent successfully', {user: user, reset: passwordReset, url: process.env.BASE_URL+`/api/auth/password/otp/${passwordReset.token}`}))
             }
