@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import nodemailer, {SentMessageInfo} from 'nodemailer'
 import Mail from "nodemailer/lib/mailer";
 import {validationResult} from "express-validator";
+import prisma from "../database";
 
 export const generateResponse = (type:string, message:string, data:any) => {
 
@@ -61,8 +62,16 @@ export const generateDate = (selectedDate: Date, reverseToFormInput = false) => 
 
 export const handleValidationErrors = (req, res, next) => {
     const errors = validationResult(req);
+    console.log(errors.array())
     if (!errors.isEmpty()) {
         return res.status(401).json({ errors: errors.array() });
     }
     next();
 };
+
+export const generateInvoiceNumber = async () => {
+    const invoiceNumber = await prisma.invoices.count(),
+        nextInvoiceNumber = invoiceNumber + 1
+
+    return `INV${nextInvoiceNumber.toString().padStart(5, '0')}`;
+}

@@ -23,6 +23,7 @@ model Users {
   PasswordResets Password_Resets[]
   Customers      Customers[]
   Invoices       Invoices[]
+  Taxes          Taxes[]
 }
 
 model Password_Resets {
@@ -47,10 +48,12 @@ model Customers {
 }
 
 model Taxes {
-  id     Int          @id @default(autoincrement())
-  name   String
-  type   DiscountType
-  amount Float        @default(0.0)
+  id        Int          @id @default(autoincrement())
+  name      String
+  type      DiscountType
+  amount    Float        @default(0.0)
+  user_id   Int
+  belongsTo Users        @relation(fields: [user_id], references: [id])
 }
 
 model Invoices {
@@ -69,7 +72,7 @@ model Invoices {
   amount_paid     Float           @default(0.0)
   sub_total       Float           @default(0.0)
   net_total       Float           @default(0.0)
-  payment_due     DateTime?
+  payment_due     DateTime?       @db.Timestamp(6)
   created_at      DateTime        @default(now())
   InvoiceItems    Invoice_Items[]
 }

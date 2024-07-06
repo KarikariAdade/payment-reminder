@@ -1115,7 +1115,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="328" parent="1" name="payment_reminder">
-      <LastIntrospectionLocalTimestamp>2024-07-05.22:31:33</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-07-06.17:29:48</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="329" parent="1" name="mysql.infoschema">
@@ -1145,7 +1145,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="335" parent="328" name="invoiceitems">
+    <table id="335" parent="328" name="invoice_items">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
@@ -1298,7 +1298,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <foreign-key id="367" parent="335" name="InvoiceItems_invoice_id_fkey">
+    <foreign-key id="367" parent="335" name="Invoice_Items_invoice_id_fkey">
       <ColNames>invoice_id</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>id</RefColNames>
@@ -1309,7 +1309,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="369" parent="335" name="InvoiceItems_invoice_id_fkey">
+    <index id="369" parent="335" name="Invoice_Items_invoice_id_fkey">
       <ColNames>invoice_id</ColNames>
       <Type>btree</Type>
     </index>

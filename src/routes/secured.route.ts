@@ -3,8 +3,9 @@ import {createCustomer, customerDetails, deleteCustomer, updateCustomer, viewCus
 import passport from "passport";
 import {validateCustomerData, validateCustomerId} from "../requests/customers.request";
 import {handleValidationErrors} from "../services/config";
-import {body} from "express-validator";
-import {viewInvoices} from "../controllers/invoices";
+import {createInvoice, deleteInvoice, invoiceDetails, updateInvoice, viewInvoices} from "../controllers/invoices";
+import {validateInvoiceData, validateInvoiceId} from "../requests/invoices.request";
+
 
 const securedRoute = Router()
 
@@ -21,4 +22,9 @@ securedRoute.post('/customers/delete', passport.authenticate('jwt', {session: fa
 // ==================== INVOICES ==================
 
 securedRoute.get('/invoices', passport.authenticate('jwt', {session: false}), viewInvoices)
+securedRoute.post('/invoices/store', passport.authenticate('jwt', {session: false}), validateInvoiceData('create'), handleValidationErrors, createInvoice)
+securedRoute.post('/invoices/update', passport.authenticate('jwt', {session: false}), validateInvoiceData('update'), handleValidationErrors, updateInvoice)
+securedRoute.post('/invoices/details', passport.authenticate('jwt', {session: false}), validateInvoiceId(), handleValidationErrors, invoiceDetails)
+securedRoute.post('/invoices/delete', passport.authenticate('jwt', {session: false}), validateInvoiceId(), handleValidationErrors, deleteInvoice)
+
 export default securedRoute
