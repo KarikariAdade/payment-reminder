@@ -3,6 +3,11 @@ import nodemailer, {SentMessageInfo} from 'nodemailer'
 import Mail from "nodemailer/lib/mailer";
 import {validationResult} from "express-validator";
 import prisma from "../database";
+import * as fs from "node:fs";
+import pdf from 'html-pdf'
+
+import handlebars from "handlebars";
+import {emailTransporter, emailwithAttachment} from "./mailconfig";
 
 export const generateResponse = (type:string, message:string, data:any) => {
 
@@ -75,3 +80,22 @@ export const generateInvoiceNumber = async () => {
 
     return `INV${nextInvoiceNumber.toString().padStart(5, '0')}`;
 }
+
+export let generatePdf = async (templatePath:string, templateData:any, outputPath:string)=> {
+    return new Promise((resolve, reject) => {
+        fs.readFile(templatePath, 'utf8', (err:any, data:any) => {
+            if (err) {
+                return reject(err)
+            }
+
+            const template = handlebars.compile(data)
+            const htmlContent = template(templateData)
+
+            pdf.create(htmlContent).toFile(outputPath, (err, res) => {
+                if (err) return reject(err)
+                resolve(res)
+            })
+        })
+    })
+}
+

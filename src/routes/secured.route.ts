@@ -3,8 +3,17 @@ import {createCustomer, customerDetails, deleteCustomer, updateCustomer, viewCus
 import passport from "passport";
 import {validateCustomerData, validateCustomerId} from "../requests/customers.request";
 import {handleValidationErrors} from "../services/config";
-import {createInvoice, deleteInvoice, invoiceDetails, updateInvoice, viewInvoices} from "../controllers/invoices";
+import {
+    createInvoice,
+    deleteInvoice,
+    invoiceDetails,
+    sendInvoiceEmail,
+    updateInvoice,
+    viewInvoices
+} from "../controllers/invoices";
 import {validateInvoiceData, validateInvoiceId} from "../requests/invoices.request";
+import {createTax, deleteTax, updateTax, viewTaxes} from "../controllers/taxes";
+import {validateTaxData, validateTaxId} from "../requests/taxes.request";
 
 
 const securedRoute = Router()
@@ -26,5 +35,18 @@ securedRoute.post('/invoices/store', passport.authenticate('jwt', {session: fals
 securedRoute.post('/invoices/update', passport.authenticate('jwt', {session: false}), validateInvoiceData('update'), handleValidationErrors, updateInvoice)
 securedRoute.post('/invoices/details', passport.authenticate('jwt', {session: false}), validateInvoiceId(), handleValidationErrors, invoiceDetails)
 securedRoute.post('/invoices/delete', passport.authenticate('jwt', {session: false}), validateInvoiceId(), handleValidationErrors, deleteInvoice)
+securedRoute.get('/invoices/send', passport.authenticate('jwt', {session: false}), sendInvoiceEmail)
+
+
+// ======================= TAXES ==================
+securedRoute.get('/taxes', passport.authenticate('jwt', {session: false}), viewTaxes)
+securedRoute.post('/taxes/store', passport.authenticate('jwt', {session: false}), validateTaxData('create'), handleValidationErrors,  createTax)
+securedRoute.post('/taxes/update', passport.authenticate('jwt', {session: false}), validateTaxData('update'), handleValidationErrors, updateTax)
+securedRoute.post('/taxes/delete', passport.authenticate('jwt', {session: false}), validateTaxId(), handleValidationErrors, deleteTax)
+
+
+
+
+
 
 export default securedRoute

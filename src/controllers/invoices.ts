@@ -1,6 +1,9 @@
 import {Request, Response} from "express";
 import prisma from "../database";
-import {generateInvoiceNumber, generateResponse} from "../services/config";
+import {generateInvoiceNumber, generateResponse, generatePdf, generateDate} from "../services/config";
+import path from "path";
+import * as fs from "node:fs";
+import {emailQueue} from "../queues/queue.setup";
 
 export const viewInvoices = async (req: Request, res: Response) => {
     const user:any = req.user,
@@ -113,10 +116,9 @@ export const updateInvoice = async (req:Request, res: Response) => {
 
     try {
         const user:any = req.user,
-            invoice_data = req.body,
-            customer_id = req.body.customer_id;
+            invoice_data = req.body;
 
-        const selected_invoice = await prisma.invoices.findFirst({
+        const selected_invoice:any = await prisma.invoices.findFirst({
             where: {
                 user_id: user.id,
                 id: invoice_data.invoice_id
@@ -140,7 +142,7 @@ export const updateInvoice = async (req:Request, res: Response) => {
 
         prisma.$transaction(async (prisma) => {
             try {
-                const invoice  = await prisma.invoices.update({
+                const invoice:any  = await prisma.invoices.update({
                     where:{
                         id: selected_invoice.id
                     },
@@ -170,8 +172,6 @@ export const updateInvoice = async (req:Request, res: Response) => {
         return res.status(500).json(generateResponse('error', 'Invoice updated successfully', null))
 
     }
-
-
 
 }
 
@@ -207,6 +207,69 @@ export const deleteInvoice = async (req: Request, res: Response) => {
     })
 
     return res.json(generateResponse('success', 'Invoice deleted successfully', null))
+}
+
+export const sendInvoiceEmail = async (req:Request, res: Response) => {
+
+    const invoice_id = req.body.invoice_id,
+        user:any = req.user
+
+    const invoice:any = await prisma.invoices.findFirst({
+        where: {
+            user_id: user.id,
+            id: invoice_id
+        },
+        include: {
+            Customers: true,
+            InvoiceItems: true
+        }
+    })
+
+    if (!invoice)
+        return res.status(404).json(generateResponse('error', 'Invoice not found', null))
+
+    const invoice_template_data = {
+        invoice: invoice,
+        invoiceDate: generateDate(invoice.created_at),
+        customer: invoice.Customers,
+        invoiceItems: invoice.InvoiceItems
+    }
+
+    try {
+
+        const absolute_template_path = path.resolve(__dirname, '../templates/invoice.hbs')
+
+        if (!fs.existsSync(absolute_template_path))
+            return res.status(404).json(generateResponse('error', 'Invoice template not found', null))
+
+        const pdfPath = path.join(__dirname, `../${invoice.invoice_number}.pdf`),
+            pdf = await generatePdf(absolute_template_path, invoice_template_data, pdfPath)
+
+        if (pdf) {
+            await emailQueue.add('sendEmail', {
+                to: invoice.Customers.email,
+                subject: `Invoice ${invoice.invoice_number}`,
+                template: "invoice_email",
+                context: invoice_template_data,
+                attachments: [{
+                    filename: `${invoice.invoice_number}.pdf`,
+                    path: pdfPath,
+                    contentType: 'application/pdf'
+                }]
+            })
+
+            return res.json(generateResponse('success', 'Email sent successfully', null))
+        }
+
+        return res.status(500).json(generateResponse('error', 'Email could not be send. Kindly try again', null))
+
+    } catch (err) {
+
+        console.error('Error sending email', err)
+
+        return res.status(500).json(generateResponse('error', 'Email could not be send. Kindly try again', null))
+    }
+
 }
 
 const generateInvoiceData = (data:any, user:number, invoice_number:string) => {

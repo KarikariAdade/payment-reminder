@@ -3,6 +3,7 @@ import IORedis from "ioredis";
 import nodemailer from "nodemailer";
 import handlebars from "nodemailer-express-handlebars";
 import path from "path";
+import fs from "node:fs";
 
 const connection = new IORedis({
     host: process.env.REDIS_HOST || '127.0.0.1',
@@ -32,17 +33,25 @@ emailTransporter.use("compile", handlebars({
     extName: ".hbs"
 }))
 
+
 const worker = new Worker('emailQueue', async job => {
     console.log("jobdata", job.data)
-    const mailOptions:{} = {
+    const mailOptions:any = {
         from: process.env.MAILER_FROM_EMAIL,
         to: job.data.to,
         subject: job.data.subject,
         template: job.data.template,
-        context: job.data.context
+        context: job.data.context,
+        attachments: job.data.attachments || []
     }
 
     await emailTransporter.sendMail(mailOptions)
+
+    if (job.data.attachments !== null) {
+
+        await fs.unlinkSync(job.data.attachments[0].path)
+
+    }
 
 }, {connection})
 

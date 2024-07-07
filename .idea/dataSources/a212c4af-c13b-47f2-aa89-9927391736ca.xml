@@ -1115,7 +1115,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="328" parent="1" name="payment_reminder">
-      <LastIntrospectionLocalTimestamp>2024-07-06.17:29:48</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-07-07.14:59:02</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="329" parent="1" name="mysql.infoschema">
@@ -1215,7 +1215,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="350" parent="334" name="id">
-      <AutoIncrement>21</AutoIncrement>
+      <AutoIncrement>22</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1271,7 +1271,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>Customers_email_key</UnderlyingIndexName>
     </key>
     <column id="362" parent="335" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>33</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1319,7 +1319,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="371" parent="336" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>14</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1373,7 +1373,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Position>10</Position>
     </column>
     <column id="381" parent="336" name="payment_due">
-      <DasType>datetime(3)|0s</DasType>
+      <DasType>timestamp(6)|0s</DasType>
       <Position>11</Position>
     </column>
     <column id="382" parent="336" name="payment_status">
@@ -1430,7 +1430,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="392" parent="337" name="id">
-      <AutoIncrement>12</AutoIncrement>
+      <AutoIncrement>13</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1502,64 +1502,79 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <index id="406" parent="338" name="PRIMARY">
+    <column id="406" parent="338" name="user_id">
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <foreign-key id="407" parent="338" name="Taxes_user_id_fkey">
+      <ColNames>user_id</ColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>users</RefTableName>
+    </foreign-key>
+    <index id="408" parent="338" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="407" parent="338" name="PRIMARY">
+    <index id="409" parent="338" name="Taxes_user_id_fkey">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="410" parent="338" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="408" parent="339" name="id">
+    <column id="411" parent="339" name="id">
       <AutoIncrement>2</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="409" parent="339" name="uuid">
+    <column id="412" parent="339" name="uuid">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="410" parent="339" name="name">
+    <column id="413" parent="339" name="name">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="411" parent="339" name="email">
+    <column id="414" parent="339" name="email">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="412" parent="339" name="password">
+    <column id="415" parent="339" name="password">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="413" parent="339" name="created_at">
+    <column id="416" parent="339" name="created_at">
       <DasType>datetime(3)|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <index id="414" parent="339" name="PRIMARY">
+    <index id="417" parent="339" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="415" parent="339" name="Users_email_key">
+    <index id="418" parent="339" name="Users_email_key">
       <ColNames>email</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="416" parent="339" name="PRIMARY">
+    <key id="419" parent="339" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="417" parent="339" name="Users_email_key">
+    <key id="420" parent="339" name="Users_email_key">
       <UnderlyingIndexName>Users_email_key</UnderlyingIndexName>
     </key>
   </database-model>

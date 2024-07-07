@@ -3,7 +3,16 @@ import nodemailer, {SentMessageInfo} from "nodemailer";
 import handlebars from "nodemailer-express-handlebars";
 import path from "path";
 
-const emailTransporter:any = nodemailer.createTransport({
+export let emailTransporter:any = nodemailer.createTransport({
+    host: process.env.MAILER_HOST,
+    port: process.env.MAILER_PORT,
+    auth: {
+        user: process.env.MAILER_USER,
+        pass: process.env.MAILER_PASSWORD
+    }
+} as any)
+
+export let emailwithAttachment:any = nodemailer.createTransport({
     host: process.env.MAILER_HOST,
     port: process.env.MAILER_PORT,
     auth: {
