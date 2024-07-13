@@ -1115,7 +1115,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="328" parent="1" name="payment_reminder">
-      <LastIntrospectionLocalTimestamp>2024-07-07.14:59:02</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-07-07.19:56:53</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="329" parent="1" name="mysql.infoschema">
@@ -1157,424 +1157,521 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="338" parent="328" name="taxes">
+    <table id="338" parent="328" name="payments">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="339" parent="328" name="users">
+    <table id="339" parent="328" name="taxes">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <column id="340" parent="333" name="id">
+    <table id="340" parent="328" name="users">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_unicode_ci</CollationName>
+    </table>
+    <column id="341" parent="333" name="id">
       <DasType>varchar(36)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="341" parent="333" name="checksum">
+    <column id="342" parent="333" name="checksum">
       <DasType>varchar(64)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="342" parent="333" name="finished_at">
+    <column id="343" parent="333" name="finished_at">
       <DasType>datetime(3)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="343" parent="333" name="migration_name">
+    <column id="344" parent="333" name="migration_name">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="344" parent="333" name="logs">
+    <column id="345" parent="333" name="logs">
       <DasType>text|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="345" parent="333" name="rolled_back_at">
+    <column id="346" parent="333" name="rolled_back_at">
       <DasType>datetime(3)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="346" parent="333" name="started_at">
+    <column id="347" parent="333" name="started_at">
       <DasType>datetime(3)|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="347" parent="333" name="applied_steps_count">
+    <column id="348" parent="333" name="applied_steps_count">
       <DasType>int unsigned|0s</DasType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <index id="348" parent="333" name="PRIMARY">
+    <index id="349" parent="333" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="349" parent="333" name="PRIMARY">
+    <key id="350" parent="333" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="350" parent="334" name="id">
+    <column id="351" parent="334" name="id">
       <AutoIncrement>22</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="351" parent="334" name="name">
+    <column id="352" parent="334" name="name">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="352" parent="334" name="email">
+    <column id="353" parent="334" name="email">
       <DasType>varchar(191)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="353" parent="334" name="phone">
+    <column id="354" parent="334" name="phone">
       <DasType>varchar(191)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="354" parent="334" name="address">
+    <column id="355" parent="334" name="address">
       <DasType>varchar(191)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="355" parent="334" name="user_id">
+    <column id="356" parent="334" name="user_id">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <foreign-key id="356" parent="334" name="Customers_user_id_fkey">
+    <column id="357" parent="334" name="created_at">
+      <DasType>datetime(3)|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <foreign-key id="358" parent="334" name="Customers_user_id_fkey">
       <ColNames>user_id</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <index id="357" parent="334" name="PRIMARY">
+    <index id="359" parent="334" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="358" parent="334" name="Customers_email_key">
+    <index id="360" parent="334" name="Customers_email_key">
       <ColNames>email</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="359" parent="334" name="Customers_user_id_fkey">
+    <index id="361" parent="334" name="Customers_user_id_fkey">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="360" parent="334" name="PRIMARY">
+    <key id="362" parent="334" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="361" parent="334" name="Customers_email_key">
+    <key id="363" parent="334" name="Customers_email_key">
       <UnderlyingIndexName>Customers_email_key</UnderlyingIndexName>
     </key>
-    <column id="362" parent="335" name="id">
+    <column id="364" parent="335" name="id">
       <AutoIncrement>33</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="363" parent="335" name="invoice_id">
+    <column id="365" parent="335" name="invoice_id">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="364" parent="335" name="item_name">
+    <column id="366" parent="335" name="item_name">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="365" parent="335" name="price">
+    <column id="367" parent="335" name="price">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="366" parent="335" name="quantity">
+    <column id="368" parent="335" name="quantity">
       <DasType>int|0s</DasType>
       <DefaultExpression>1</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <foreign-key id="367" parent="335" name="Invoice_Items_invoice_id_fkey">
+    <column id="369" parent="335" name="created_at">
+      <DasType>datetime(3)|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <foreign-key id="370" parent="335" name="Invoice_Items_invoice_id_fkey">
       <ColNames>invoice_id</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>id</RefColNames>
       <RefTableName>invoices</RefTableName>
     </foreign-key>
-    <index id="368" parent="335" name="PRIMARY">
+    <index id="371" parent="335" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="369" parent="335" name="Invoice_Items_invoice_id_fkey">
+    <index id="372" parent="335" name="Invoice_Items_invoice_id_fkey">
       <ColNames>invoice_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="370" parent="335" name="PRIMARY">
+    <key id="373" parent="335" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="371" parent="336" name="id">
+    <column id="374" parent="336" name="id">
       <AutoIncrement>14</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="372" parent="336" name="user_id">
+    <column id="375" parent="336" name="user_id">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="373" parent="336" name="customer_id">
+    <column id="376" parent="336" name="customer_id">
       <DasType>int|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="374" parent="336" name="discount_amount">
+    <column id="377" parent="336" name="discount_amount">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="375" parent="336" name="discount_total">
+    <column id="378" parent="336" name="discount_total">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="376" parent="336" name="discount_type">
+    <column id="379" parent="336" name="discount_type">
       <DasType>enum(&apos;Fixed&apos;, &apos;Percentage&apos;)|0e</DasType>
       <Position>6</Position>
     </column>
-    <column id="377" parent="336" name="amount_paid">
+    <column id="380" parent="336" name="amount_paid">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="378" parent="336" name="created_at">
+    <column id="381" parent="336" name="created_at">
       <DasType>datetime(3)|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <column id="379" parent="336" name="invoice_number">
+    <column id="382" parent="336" name="invoice_number">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
     </column>
-    <column id="380" parent="336" name="net_total">
+    <column id="383" parent="336" name="net_total">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>10</Position>
     </column>
-    <column id="381" parent="336" name="payment_due">
+    <column id="384" parent="336" name="payment_due">
       <DasType>timestamp(6)|0s</DasType>
       <Position>11</Position>
     </column>
-    <column id="382" parent="336" name="payment_status">
+    <column id="385" parent="336" name="payment_status">
       <DasType>enum(&apos;success&apos;, &apos;failed&apos;, &apos;pending&apos;)|0e</DasType>
       <DefaultExpression>&apos;pending&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>12</Position>
     </column>
-    <column id="383" parent="336" name="sub_total">
+    <column id="386" parent="336" name="sub_total">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>13</Position>
     </column>
-    <column id="384" parent="336" name="tax_total">
+    <column id="387" parent="336" name="tax_total">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>14</Position>
     </column>
-    <column id="385" parent="336" name="taxes">
+    <column id="388" parent="336" name="taxes">
       <DasType>json|0s</DasType>
       <Position>15</Position>
     </column>
-    <foreign-key id="386" parent="336" name="Invoices_user_id_fkey">
+    <foreign-key id="389" parent="336" name="Invoices_user_id_fkey">
       <ColNames>user_id</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <foreign-key id="387" parent="336" name="Invoices_customer_id_fkey">
+    <foreign-key id="390" parent="336" name="Invoices_customer_id_fkey">
       <ColNames>customer_id</ColNames>
       <OnDelete>set-null</OnDelete>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>id</RefColNames>
       <RefTableName>customers</RefTableName>
     </foreign-key>
-    <index id="388" parent="336" name="PRIMARY">
+    <index id="391" parent="336" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="389" parent="336" name="Invoices_user_id_fkey">
+    <index id="392" parent="336" name="Invoices_user_id_fkey">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="390" parent="336" name="Invoices_customer_id_fkey">
+    <index id="393" parent="336" name="Invoices_customer_id_fkey">
       <ColNames>customer_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="391" parent="336" name="PRIMARY">
+    <key id="394" parent="336" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="392" parent="337" name="id">
+    <column id="395" parent="337" name="id">
       <AutoIncrement>13</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="393" parent="337" name="user_id">
+    <column id="396" parent="337" name="user_id">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="394" parent="337" name="otp">
+    <column id="397" parent="337" name="otp">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="395" parent="337" name="is_used">
+    <column id="398" parent="337" name="is_used">
       <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="396" parent="337" name="expiration">
+    <column id="399" parent="337" name="expiration">
       <DasType>datetime(3)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="397" parent="337" name="token">
+    <column id="400" parent="337" name="token">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <foreign-key id="398" parent="337" name="Password_Resets_user_id_fkey">
+    <column id="401" parent="337" name="created_at">
+      <DasType>datetime(3)|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <foreign-key id="402" parent="337" name="Password_Resets_user_id_fkey">
       <ColNames>user_id</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <index id="399" parent="337" name="PRIMARY">
+    <index id="403" parent="337" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="400" parent="337" name="Password_Resets_user_id_fkey">
+    <index id="404" parent="337" name="Password_Resets_user_id_fkey">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="401" parent="337" name="PRIMARY">
+    <key id="405" parent="337" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="402" parent="338" name="id">
+    <column id="406" parent="338" name="id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="403" parent="338" name="name">
-      <DasType>varchar(191)|0s</DasType>
+    <column id="407" parent="338" name="invoice_id">
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="404" parent="338" name="type">
-      <DasType>enum(&apos;Fixed&apos;, &apos;Percentage&apos;)|0e</DasType>
+    <column id="408" parent="338" name="user_id">
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="405" parent="338" name="amount">
+    <column id="409" parent="338" name="amount">
       <DasType>double|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="406" parent="338" name="user_id">
-      <DasType>int|0s</DasType>
+    <column id="410" parent="338" name="reference">
+      <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <foreign-key id="407" parent="338" name="Taxes_user_id_fkey">
+    <column id="411" parent="338" name="status">
+      <DasType>enum(&apos;success&apos;, &apos;failed&apos;, &apos;pending&apos;)|0e</DasType>
+      <DefaultExpression>&apos;pending&apos;</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="412" parent="338" name="created_at">
+      <DasType>datetime(3)|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <foreign-key id="413" parent="338" name="Payments_invoice_id_fkey">
+      <ColNames>invoice_id</ColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>invoices</RefTableName>
+    </foreign-key>
+    <foreign-key id="414" parent="338" name="Payments_user_id_fkey">
       <ColNames>user_id</ColNames>
       <OnUpdate>cascade</OnUpdate>
       <RefColNames>id</RefColNames>
       <RefTableName>users</RefTableName>
     </foreign-key>
-    <index id="408" parent="338" name="PRIMARY">
+    <index id="415" parent="338" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="409" parent="338" name="Taxes_user_id_fkey">
+    <index id="416" parent="338" name="Payments_invoice_id_fkey">
+      <ColNames>invoice_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="417" parent="338" name="Payments_user_id_fkey">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="410" parent="338" name="PRIMARY">
+    <key id="418" parent="338" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="411" parent="339" name="id">
-      <AutoIncrement>2</AutoIncrement>
+    <column id="419" parent="339" name="id">
+      <AutoIncrement>1</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="412" parent="339" name="uuid">
+    <column id="420" parent="339" name="name">
       <DasType>varchar(191)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="413" parent="339" name="name">
-      <DasType>varchar(191)|0s</DasType>
+    <column id="421" parent="339" name="type">
+      <DasType>enum(&apos;Fixed&apos;, &apos;Percentage&apos;)|0e</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="414" parent="339" name="email">
-      <DasType>varchar(191)|0s</DasType>
+    <column id="422" parent="339" name="amount">
+      <DasType>double|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="415" parent="339" name="password">
-      <DasType>varchar(191)|0s</DasType>
+    <column id="423" parent="339" name="user_id">
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="416" parent="339" name="created_at">
+    <column id="424" parent="339" name="created_at">
       <DasType>datetime(3)|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <index id="417" parent="339" name="PRIMARY">
+    <foreign-key id="425" parent="339" name="Taxes_user_id_fkey">
+      <ColNames>user_id</ColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <RefColNames>id</RefColNames>
+      <RefTableName>users</RefTableName>
+    </foreign-key>
+    <index id="426" parent="339" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="418" parent="339" name="Users_email_key">
-      <ColNames>email</ColNames>
+    <index id="427" parent="339" name="Taxes_user_id_fkey">
+      <ColNames>user_id</ColNames>
       <Type>btree</Type>
-      <Unique>1</Unique>
     </index>
-    <key id="419" parent="339" name="PRIMARY">
+    <key id="428" parent="339" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="420" parent="339" name="Users_email_key">
+    <column id="429" parent="340" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="430" parent="340" name="uuid">
+      <DasType>varchar(191)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="431" parent="340" name="name">
+      <DasType>varchar(191)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="432" parent="340" name="email">
+      <DasType>varchar(191)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <column id="433" parent="340" name="password">
+      <DasType>varchar(191)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="434" parent="340" name="created_at">
+      <DasType>datetime(3)|0s</DasType>
+      <DefaultExpression>CURRENT_TIMESTAMP(3)</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <index id="435" parent="340" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="436" parent="340" name="Users_email_key">
+      <ColNames>email</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="437" parent="340" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="438" parent="340" name="Users_email_key">
       <UnderlyingIndexName>Users_email_key</UnderlyingIndexName>
     </key>
   </database-model>

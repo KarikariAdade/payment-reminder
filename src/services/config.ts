@@ -1,13 +1,10 @@
 import bcrypt from 'bcrypt'
-import nodemailer, {SentMessageInfo} from 'nodemailer'
-import Mail from "nodemailer/lib/mailer";
 import {validationResult} from "express-validator";
 import prisma from "../database";
 import * as fs from "node:fs";
 import pdf from 'html-pdf'
 
 import handlebars from "handlebars";
-import {emailTransporter, emailwithAttachment} from "./mailconfig";
 
 export const generateResponse = (type:string, message:string, data:any) => {
 

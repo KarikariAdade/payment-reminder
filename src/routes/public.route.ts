@@ -15,6 +15,9 @@ import {
 } from "../controllers/authentication";
 import passport from 'passport'
 import app from "../server";
+import {initPaymentValidation} from "../requests/payments.request";
+import {handleValidationErrors} from "../services/config";
+import {initiatePaymentRequest} from "../controllers/payments";
 
 
 const publicRouter = Router();

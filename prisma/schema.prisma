@@ -24,6 +24,7 @@ model Users {
   Customers      Customers[]
   Invoices       Invoices[]
   Taxes          Taxes[]
+  Payments       Payments[]
 }
 
 model Password_Resets {
@@ -34,26 +35,29 @@ model Password_Resets {
   is_used    Boolean   @default(false)
   expiration DateTime?
   token      String    @default(uuid())
+  created_at DateTime  @default(now())
 }
 
 model Customers {
-  id        Int        @id @default(autoincrement())
-  name      String
-  email     String?    @unique
-  phone     String?
-  address   String?
-  user_id   Int
-  belongsTo Users      @relation(fields: [user_id], references: [id])
-  Invoices  Invoices[]
+  id         Int        @id @default(autoincrement())
+  name       String
+  email      String?    @unique
+  phone      String?
+  address    String?
+  user_id    Int
+  belongsTo  Users      @relation(fields: [user_id], references: [id])
+  Invoices   Invoices[]
+  created_at DateTime   @default(now())
 }
 
 model Taxes {
-  id        Int          @id @default(autoincrement())
-  name      String
-  type      DiscountType
-  amount    Float        @default(0.0)
-  user_id   Int
-  belongsTo Users        @relation(fields: [user_id], references: [id])
+  id         Int          @id @default(autoincrement())
+  name       String
+  type       DiscountType
+  amount     Float        @default(0.0)
+  user_id    Int
+  belongsTo  Users        @relation(fields: [user_id], references: [id])
+  created_at DateTime     @default(now())
 }
 
 model Invoices {
@@ -75,6 +79,7 @@ model Invoices {
   payment_due     DateTime?       @db.Timestamp(6)
   created_at      DateTime        @default(now())
   InvoiceItems    Invoice_Items[]
+  Payments        Payments[]
 }
 
 model Invoice_Items {
@@ -84,6 +89,20 @@ model Invoice_Items {
   item_name  String
   price      Float    @default(0.0)
   quantity   Int      @default(1)
+  created_at DateTime @default(now())
+}
+
+model Payments {
+  id         Int           @id @default(autoincrement())
+  invoice_id Int
+  user_id    Int
+  belongsTo  Invoices      @relation(fields: [invoice_id], references: [id])
+  Users      Users         @relation(fields: [user_id], references: [id])
+  amount     Float         @default(0.0)
+  reference  String        @default(uuid())
+  status     PaymentStatus @default(pending)
+  created_at DateTime      @default(now())
+  I
 }
 
 enum DiscountType {

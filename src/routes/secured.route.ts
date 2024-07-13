@@ -14,6 +14,14 @@ import {
 import {validateInvoiceData, validateInvoiceId} from "../requests/invoices.request";
 import {createTax, deleteTax, updateTax, viewTaxes} from "../controllers/taxes";
 import {validateTaxData, validateTaxId} from "../requests/taxes.request";
+import {
+    createPayment,
+    deletePayment,
+    initiatePaymentRequest,
+    updatePayment,
+    viewPayments
+} from "../controllers/payments";
+import {initPaymentValidation, validatePaymentData, validatePaymentId} from "../requests/payments.request";
 
 
 const securedRoute = Router()
@@ -44,8 +52,12 @@ securedRoute.post('/taxes/store', passport.authenticate('jwt', {session: false})
 securedRoute.post('/taxes/update', passport.authenticate('jwt', {session: false}), validateTaxData('update'), handleValidationErrors, updateTax)
 securedRoute.post('/taxes/delete', passport.authenticate('jwt', {session: false}), validateTaxId(), handleValidationErrors, deleteTax)
 
-
-
+// ======================= PAYMENTS ==================
+securedRoute.get('/payments', passport.authenticate('jwt', {session: false}), viewPayments)
+securedRoute.post('/payments/store', passport.authenticate('jwt', {session: false}), validatePaymentData('create'), handleValidationErrors, createPayment)
+securedRoute.post('/payments/update', passport.authenticate('jwt', {session: false}), validatePaymentData('update'), handleValidationErrors, updatePayment)
+securedRoute.post('/payments/delete', passport.authenticate('jwt', {session: false}), validatePaymentId(), handleValidationErrors, deletePayment)
+securedRoute.post('payment/init', passport.authenticate('jwt', {session: false}), initPaymentValidation, handleValidationErrors, initiatePaymentRequest)
 
 
 

@@ -1,6 +1,7 @@
 import {Request, Response} from "express";
 import prisma from "../database";
 import {generateResponse} from "../services/config";
+import {logger} from "../services/logger";
 
 export const viewTaxes = async (req:Request, res:Response) => {
     const user:any = req.user
@@ -18,6 +19,7 @@ export const createTax = async (req:Request, res:Response) => {
     const user:any = req.user,
         {name, type, amount} = req.body
 
+    logger.info(user)
     try {
 
         const checkTax = await prisma.taxes.findFirst({
@@ -42,6 +44,7 @@ export const createTax = async (req:Request, res:Response) => {
         return res.json(generateResponse('success', 'Tax created successfully', newTax))
 
     } catch (err) {
+        logger.info(err)
         console.log(err, 'error while creating taxes')
         return res.status(500).json(generateResponse('error', 'Error while creating taxes', err))
     }

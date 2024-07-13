@@ -101,7 +101,8 @@ export const invoiceDetails = async (req: Request, res: Response) => {
         },
         include: {
             Customers: true,
-            InvoiceItems: true
+            InvoiceItems: true,
+            Payments: true
         }
     })
 
