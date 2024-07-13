@@ -14,10 +14,8 @@ import {
     userProfile
 } from "../controllers/authentication";
 import passport from 'passport'
-import app from "../server";
-import {initPaymentValidation} from "../requests/payments.request";
-import {handleValidationErrors} from "../services/config";
 import {initiatePaymentRequest} from "../controllers/payments";
+import securedRoute from "./secured.route";
 
 
 const publicRouter = Router();
@@ -29,5 +27,10 @@ publicRouter.post('/auth/password/forgot', passwordForgotValidation, forgotPassw
 publicRouter.get('/auth/password/otp/:token', passwordForgotOtpValidation, forgotPasswordOtp)
 publicRouter.post('/auth/password/reset', passwordResetValidation, resetPassword)
 publicRouter.get('/profile', passport.authenticate('jwt', {session: false}), userProfile)
+
+
+
+
+
 
 export default publicRouter

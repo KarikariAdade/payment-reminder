@@ -17,17 +17,20 @@ import {validateTaxData, validateTaxId} from "../requests/taxes.request";
 import {
     createPayment,
     deletePayment,
-    initiatePaymentRequest,
+    initiatePaymentRequest, paymentCallback, sendPaymentRequest,
     updatePayment,
     viewPayments
 } from "../controllers/payments";
-import {initPaymentValidation, validatePaymentData, validatePaymentId} from "../requests/payments.request";
+import {
+    initPaymentValidation,
+    validatePaymentData,
+    validatePaymentId, validatePaymentRequest
+} from "../requests/payments.request";
 
 
 const securedRoute = Router()
 
 //============= CUSTOMERS ROUTE ================
-
 
 securedRoute.get('/customers', passport.authenticate('jwt', {session: false}), viewCustomers)
 securedRoute.post('/customers/store', passport.authenticate('jwt', {session: false}), validateCustomerData('create'), handleValidationErrors, createCustomer)
@@ -47,18 +50,22 @@ securedRoute.get('/invoices/send', passport.authenticate('jwt', {session: false}
 
 
 // ======================= TAXES ==================
+
 securedRoute.get('/taxes', passport.authenticate('jwt', {session: false}), viewTaxes)
 securedRoute.post('/taxes/store', passport.authenticate('jwt', {session: false}), validateTaxData('create'), handleValidationErrors,  createTax)
 securedRoute.post('/taxes/update', passport.authenticate('jwt', {session: false}), validateTaxData('update'), handleValidationErrors, updateTax)
 securedRoute.post('/taxes/delete', passport.authenticate('jwt', {session: false}), validateTaxId(), handleValidationErrors, deleteTax)
 
+
 // ======================= PAYMENTS ==================
+
 securedRoute.get('/payments', passport.authenticate('jwt', {session: false}), viewPayments)
 securedRoute.post('/payments/store', passport.authenticate('jwt', {session: false}), validatePaymentData('create'), handleValidationErrors, createPayment)
 securedRoute.post('/payments/update', passport.authenticate('jwt', {session: false}), validatePaymentData('update'), handleValidationErrors, updatePayment)
 securedRoute.post('/payments/delete', passport.authenticate('jwt', {session: false}), validatePaymentId(), handleValidationErrors, deletePayment)
-securedRoute.post('payment/init', passport.authenticate('jwt', {session: false}), initPaymentValidation, handleValidationErrors, initiatePaymentRequest)
+securedRoute.post('/payments/request', passport.authenticate('jwt', {session: false}), validatePaymentRequest(), handleValidationErrors, sendPaymentRequest)
 
-
+securedRoute.get('/payments/init/:invoice_id', initiatePaymentRequest)
+securedRoute.all('/payments/callback', paymentCallback)
 
 export default securedRoute

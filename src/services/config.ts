@@ -3,6 +3,7 @@ import {validationResult} from "express-validator";
 import prisma from "../database";
 import * as fs from "node:fs";
 import pdf from 'html-pdf'
+import * as crypto from "node:crypto";
 
 import handlebars from "handlebars";
 
@@ -95,4 +96,3 @@ export let generatePdf = async (templatePath:string, templateData:any, outputPat
         })
     })
 }
-

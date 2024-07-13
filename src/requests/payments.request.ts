@@ -21,10 +21,14 @@ export const validatePaymentId:any = () => {
     return body('payment_id').notEmpty().withMessage('Payment ID field is required')
 }
 
-export const initPaymentValidation = () => {
+export const initPaymentValidation:any = () => {
     return [
         body('customer_id').notEmpty().withMessage('Customer ID field is required'),
         body('amount').notEmpty().withMessage('Amount field is required')
 
     ]
+}
+
+export const validatePaymentRequest:any = () => {
+    return body('invoice_id').notEmpty().withMessage('Invoice ID field is required')
 }
