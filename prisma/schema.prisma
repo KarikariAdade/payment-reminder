@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -102,7 +102,6 @@ model Payments {
   reference  String        @default(uuid())
   status     PaymentStatus @default(pending)
   created_at DateTime      @default(now())
-  I
 }
 
 enum DiscountType {
