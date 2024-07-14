@@ -1,7 +1,7 @@
 {
   "name": "payment-reminder",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "type": "commonjs",
   "scripts": {
     "build": "tsc",
