@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id             Int               @id @default(autoincrement())
+  uuid           String            @default(uuid())
+  name           String
+  email          String            @unique
+  password       String
+  created_at     DateTime          @default(now())
+  PasswordResets Password_Resets[]
+  Customers      Customers[]
+  Invoices       Invoices[]
+  Taxes          Taxes[]
+  Payments       Payments[]
+}
+
+model Password_Resets {
+  id         Int       @id @default(autoincrement())
+  user_id    Int
+  belongsTo  Users     @relation(fields: [user_id], references: [id])
+  otp        String
+  is_used    Boolean   @default(false)
+  expiration DateTime?
+  token      String    @default(uuid())
+  created_at DateTime  @default(now())
+}
+
+model Customers {
+  id         Int        @id @default(autoincrement())
+  name       String
+  email      String?    @unique
+  phone      String?
+  address    String?
+  user_id    Int
+  belongsTo  Users      @relation(fields: [user_id], references: [id])
+  Invoices   Invoices[]
+  created_at DateTime   @default(now())
+}
+
+model Taxes {
+  id         Int          @id @default(autoincrement())
+  name       String
+  type       DiscountType
+  amount     Float        @default(0.0)
+  user_id    Int
+  belongsTo  Users        @relation(fields: [user_id], references: [id])
+  created_at DateTime     @default(now())
+}
+
+model Invoices {
+  id              Int             @id @default(autoincrement())
+  user_id         Int
+  customer_id     Int?
+  belongsTo       Users           @relation(fields: [user_id], references: [id])
+  Customers       Customers?      @relation(fields: [customer_id], references: [id])
+  discount_type   DiscountType?
+  discount_amount Float           @default(0.0)
+  discount_total  Float           @default(0.0)
+  taxes           Json?
+  tax_total       Float           @default(0.0)
+  invoice_number  String
+  payment_status  PaymentStatus   @default(pending)
+  amount_paid     Float           @default(0.0)
+  sub_total       Float           @default(0.0)
+  net_total       Float           @default(0.0)
+  payment_due     DateTime?       @db.Timestamp(6)
+  created_at      DateTime        @default(now())
+  InvoiceItems    Invoice_Items[]
+  Payments        Payments[]
+}
+
+model Invoice_Items {
+  id         Int      @id @default(autoincrement())
+  invoice_id Int
+  belongsTo  Invoices @relation(fields: [invoice_id], references: [id])
+  item_name  String
+  price      Float    @default(0.0)
+  quantity   Int      @default(1)
+  created_at DateTime @default(now())
+}
+
+model Payments {
+  id         Int           @id @default(autoincrement())
+  invoice_id Int
+  user_id    Int
+  belongsTo  Invoices      @relation(fields: [invoice_id], references: [id])
+  Users      Users         @relation(fields: [user_id], references: [id])
+  amount     Float         @default(0.0)
+  reference  String        @default(uuid())
+  status     PaymentStatus @default(pending)
+  created_at DateTime      @default(now())
+}
+
+enum DiscountType {
+  Fixed
+  Percentage
+}
+
+enum PaymentStatus {
+  success
+  failed
+  pending
+}

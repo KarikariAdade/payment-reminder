@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .invoice {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .invoice-info, .company-info {
+            text-align: right;
+        }
+
+        .billing-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .invoice-items {
+            margin-bottom: 20px;
+        }
+
+        .invoice-items table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-items th, .invoice-items td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .invoice-items th {
+            background-color: #f4f4f4;
+        }
+
+        .totals {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .notes, .terms {
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="invoice">
+    <header>
+        <h1>INVOICE</h1>
+        <div class="invoice-info">
+            <p>Invoice #: {{invoice.invoice_number}}</p>
+            <p>Date: {{ invoiceDate }}</p>
+        </div>
+        <div class="company-info">
+            <p>Karikari Adade</p>
+            <p>iamkarikari98@gmail.com</p>
+            <p>0548876922</p>
+        </div>
+    </header>
+    <section class="billing-info">
+        <div>
+            <h2>Bill To:</h2>
+            <p>{{ customer.name }}</p>
+            <p>{{ customer.email }}</p>
+            <p>{{ customer.phone }}</p>
+        </div>
+        <div>
+            <h2>Payment Terms:</h2>
+            <p>Not Refundable</p>
+            <p>Due Date: {{invoice.payment_due}}</p>
+        </div>
+    </section>
+    <section class="invoice-items">
+        <table>
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each invoiceItems}}
+                <tr>
+                    <td>{{item_name}}</td>
+                    <td>{{quantity}}</td>
+                    <td>{{price}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </section>
+    <section class="totals">
+        <p>Subtotal: GHS {{invoice.sub_total}}</p>
+        <p>Discount: GHS {{invoice.discount_total}}</p>
+        <p>Tax (0%): GHS {{invoice.tax_total}}</p>
+        <p>Total: GHS {{invoice.net_total}}</p>
+    </section>
+</div>
+</body>
+</html>

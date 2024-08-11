@@ -1,0 +1,91 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+input[type="email"]:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.switch {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.switch a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.switch a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 20px;
+  }
+}
