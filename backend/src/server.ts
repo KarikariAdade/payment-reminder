@@ -1,5 +1,6 @@
 import express, {Express, Request, Response} from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import publicRouter from "./routes/public.route";
 import passport from "./services/passport";
 import securedRoute from "./routes/secured.route";
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json())
 
 app.use(morgan('dev'))
+app.use(cors())
 
 app.use(passport.initialize())
 

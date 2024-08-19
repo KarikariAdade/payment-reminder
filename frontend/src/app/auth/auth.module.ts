@@ -15,14 +15,32 @@ import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from "ng-zorro
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import { AuthComponent } from './auth.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import {HTTP_INTERCEPTORS, provideHttpClient} from "@angular/common/http";
+import {
+  NgxUiLoaderConfig,
+  NgxUiLoaderHttpModule,
+  NgxUiLoaderModule,
+  NgxUiLoaderRouterModule, PB_DIRECTION,
+  POSITION, SPINNER
+} from "ngx-ui-loader";
+import {AppModule} from "../app.module";
+import {SharedModule} from "../shared/shared.module";
 
-
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: "blue",
+  bgsPosition: POSITION.bottomCenter,
+  bgsSize: 40,
+  bgsType: SPINNER.squareLoader, // background spinner type
+  fgsType: SPINNER.squareLoader, // foreground spinner type
+  pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
+  pbThickness: 5, // progress bar thickness
+};
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
     AuthComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +61,13 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     NzMenuItemComponent,
     NzHeaderComponent,
     NzIconDirective,
-    NzContentComponent
-  ]
+    NzContentComponent,
+    SharedModule
+
+  ],
+  providers: [
+    provideHttpClient(),
+
+  ],
 })
 export class AuthModule { }

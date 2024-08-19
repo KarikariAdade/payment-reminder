@@ -37,7 +37,7 @@ export const createPayment = async (req: Request, res: Response) => {
     })
 
     if (!invoice)
-        return res.json(generateResponse('error', "Invoice not found", {}));
+        return res.status(401).json(generateResponse('error', "Invoice not found", {}));
 
     try {
 
@@ -111,7 +111,7 @@ export const updatePayment = async (req:Request, res:Response) => {
         })
 
         if (!payment)
-            return res.json(generateResponse('error', "Payment not found", {}));
+            return res.status(401).json(generateResponse('error', "Payment not found", {}));
 
         const invoice = await prisma.invoices.findFirst({
             where: {
@@ -121,7 +121,7 @@ export const updatePayment = async (req:Request, res:Response) => {
         })
 
         if (!invoice)
-            return res.json(generateResponse('error', "Invoice not found", {}));
+            return res.status(401).json(generateResponse('error', "Invoice not found", {}));
 
         prisma.$transaction(async (prisma) => {
 
@@ -154,7 +154,7 @@ export const updatePayment = async (req:Request, res:Response) => {
     } catch (errors) {
         logger.error('Could not update payment', errors)
 
-        return res.status(500).json(generateResponse('error', "Failed to update payment", {}));
+        return res.status(401).json(generateResponse('error', "Failed to update payment", {}));
     }
 
 
@@ -288,12 +288,12 @@ export const sendPaymentRequest = async (req: Request, res: Response) => {
     })
 
     if (!invoice)
-        return res.json(generateResponse('error', "Invoice not found or payment has already been made", {}));
+        return res.status(401).json(generateResponse('error', "Invoice not found or payment has already been made", {}));
 
     const amount_remaining = invoice.net_total - invoice.amount_paid
 
     if (amount_remaining <= 0)
-        return res.json(generateResponse('error', "Payment has already been made", {}));
+        return res.status(401).json(generateResponse('error', "Payment has already been made", {}));
 
     try {
 

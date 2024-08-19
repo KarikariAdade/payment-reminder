@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="@localhost">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.52">
-    <root id="1"/>
+    <root id="1">
+      <DefaultEngine>InnoDB</DefaultEngine>
+      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
+      <ServerVersion>8.0.34</ServerVersion>
+    </root>
     <collation id="2" parent="1" name="armscii8_general_ci">
       <Charset>armscii8</Charset>
       <DefaultForCharset>1</DefaultForCharset>
@@ -1022,7 +1026,7 @@
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="328" parent="1" name="payment_reminder">
-      <LastIntrospectionLocalTimestamp>2024-07-07.19:56:53</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-08-18.16:03:18</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="329" parent="1" name="mysql.infoschema">
@@ -1410,7 +1414,7 @@
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="406" parent="338" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>15</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1479,7 +1483,7 @@
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
     <column id="419" parent="339" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>4</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>

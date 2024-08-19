@@ -30,7 +30,7 @@ export const createTax = async (req:Request, res:Response) => {
         })
 
         if (checkTax)
-            return res.status(400).json(generateResponse('error', 'Tax with the same name already exists', null))
+            return res.status(500).json(generateResponse('error', 'Tax with the same name already exists', null))
 
         const newTax = await prisma.taxes.create({
             data: {

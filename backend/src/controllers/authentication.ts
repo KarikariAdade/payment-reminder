@@ -13,7 +13,7 @@ export const createUser = async (req:Request, res:Response) => {
     const validationErrors = validationResult(req)
 
     if (!validationErrors.isEmpty())
-        return res.json(generateResponse('error', 'validation errors', validationErrors.array()))
+        return res.status(401).json(generateResponse('error', 'validation errors', validationErrors.array()))
 
     try {
 
@@ -40,13 +40,13 @@ export const createUser = async (req:Request, res:Response) => {
 
         }else {
 
-            return res.json(generateResponse('error', 'Email already exists', null))
+            return res.status(401).json(generateResponse('error', "Email already exists. If you're the owner of the account, kindly log in.", null))
 
         }
 
     } catch (err) {
         console.log(err)
-        return res.json({error: err})
+        return res.status(401).json({error: err})
 
     }
 
@@ -61,12 +61,12 @@ export const loginUser = async (req: Request, res: Response) => {
         const user = await prisma.users.findUnique({where: {email}})
 
         if (!user)
-            return res.json(generateResponse('error', 'User not found', null))
+            return res.status(401).json(generateResponse('error', 'User not found', null))
 
         const isMatch:boolean = await bcrypt.compare(password, user.password);
 
         if (!isMatch)
-            return res.json(generateResponse('error', 'Invalid credentials', null))
+            return res.status(401).json(generateResponse('error', 'Invalid credentials', null))
 
         const payload = {id: user.id, uuid: user.uuid},
             token = jwt.sign(payload, jwtSecret, {expiresIn: '1D'})
@@ -75,7 +75,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     } catch (err) {
 
-        res.json(generateResponse('error', 'Error while login', err))
+        res.status(401).json(generateResponse('error', 'Error while login', err))
     }
 
 }
@@ -120,14 +120,14 @@ export const forgotPassword = async (req: Request, res: Response) => {
                 return res.json(generateResponse('success', 'Password reset email sent successfully', {user: user, reset: passwordReset, url: process.env.BASE_URL+`/api/auth/password/otp/${passwordReset.token}`}))
             }
 
-            return res.status(500).json(generateResponse('error', 'Password reset could not be initiated.Kindly try again', null))
+            return res.status(401).json(generateResponse('error', 'Password reset could not be initiated.Kindly try again', null))
 
         }
 
-        return res.status(500).json(generateResponse('error', 'User not found', null))
+        return res.status(401).json(generateResponse('error', 'User not found', null))
     } catch (error) {
         console.error("error:", error)
-        return res.status(500).json(generateResponse('error', 'Error while sending password reset email', error))
+        return res.status(401).json(generateResponse('error', 'Error while sending password reset email', error))
     }
 
 }
@@ -141,14 +141,14 @@ export const userProfile = async (req:Request, res:Response) => {
         const user:any = await prisma.users.findUnique({where: {id: requestUser.id}})
 
         if (!user) {
-            res.json(generateResponse('error', 'User not found', null))
+            res.status(401).json(generateResponse('error', 'User not found', null))
         }
 
         res.json(generateResponse('success', 'User profile fetched successfully', user))
 
     } catch (err) {
         console.log(err)
-        return res.json({error: err})
+        return res.status(401).json({error: err})
     }
 
 }
@@ -159,7 +159,7 @@ export const resetPassword = async (req: Request, res: Response) => {
         token = req.params.token
 
     if (token === '' || token === null)
-        return res.status(500).json(generateResponse('error', "Token missing", null));
+        return res.status(401).json(generateResponse('error', "Token missing", null));
 
     try {
         const passwordReset:any = await prisma.password_Resets.findFirst({
@@ -170,7 +170,7 @@ export const resetPassword = async (req: Request, res: Response) => {
         })
 
         if (!passwordReset)
-            return res.status(500).json(generateResponse('error', "Invalid or expired token", null));
+            return res.status(401).json(generateResponse('error', "Invalid or expired token", null));
 
         const user = await prisma.users.findUnique({
             where: {
@@ -179,7 +179,7 @@ export const resetPassword = async (req: Request, res: Response) => {
         })
 
         if (!user)
-            return res.status(500).json(generateResponse('error', "User not found", null));
+            return res.status(401).json(generateResponse('error', "User not found", null));
 
         const newPassword = await hashPassword(password);
 
@@ -193,11 +193,11 @@ export const resetPassword = async (req: Request, res: Response) => {
         })
 
         if (!updatedUser)
-            return res.status(500).json(generateResponse('error', "Error while resetting password. Kindly try again", null));
+            return res.status(401).json(generateResponse('error', "Error while resetting password. Kindly try again", null));
 
         return res.json(generateResponse('success', 'Password updated successfully', null));
     } catch (errors) {
-        return res.json(generateResponse('error', 'Password could not be updated', null))
+        return res.status(401).json(generateResponse('error', 'Password could not be updated', null))
     }
     
 }
@@ -220,7 +220,7 @@ export const forgotPasswordOtp = async (req: Request, res: Response) => {
     })
 
     if (!passwordReset)
-        return res.status(500).json(generateResponse('error', "Invalid OTP or expired token", null));
+        return res.status(401).json(generateResponse('error', "Invalid OTP or expired token", null));
 
     return res.status(200).json(generateResponse('success', "Password reset found", passwordReset))
 
