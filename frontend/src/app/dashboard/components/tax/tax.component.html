@@ -1,1 +1,40 @@
-<h1>tax works!</h1>
+<app-breadcrumb [mainPages]="{name: 'Taxes', url: 'dashboard/taxes'}"></app-breadcrumb>
+<nz-card nzTitle="Taxes">
+  <div class="" style="text-align: right;">
+    <button class="btn btn-dark shadow" (click)="toggleTaxForm()">{{ showTaxForm ? 'Hide Tax Form' : 'Show Tax Form'}}</button>
+  </div>
+  <div class="card-body">
+    <form class="row" *ngIf="showTaxForm" [formGroup]="taxesForm" (submit)="submitTaxForm()">
+      <div class="col-md-12">
+        <app-alert *ngIf="hasError" [message]="errorMessage" [type]="errorType"></app-alert>
+      </div>
+      <div class="col-md-3 form-group">
+        <label>Name <strong class="text-danger">*</strong></label>
+        <input nz-input type="text" formControlName="name" />
+        <div class="error mt-2" *ngIf="(taxesForm.controls['name'].touched || taxesForm.controls['name'].dirty) && taxesForm.controls['name'].errors as formErrors">
+          <strong class="text-danger" *ngIf="formErrors['required']">Name field is required</strong><br>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <label>Type <strong class="text-danger">*</strong></label>
+        <nz-select style="width: 100%;" formControlName="type">
+          <nz-option nzValue="Fixed" nzLabel="Fixed"></nz-option>
+          <nz-option nzValue="Percentage" nzLabel="Percentage"></nz-option>
+        </nz-select>
+        <div class="error mt-2" *ngIf="(taxesForm.controls['type'].touched || taxesForm.controls['type'].dirty) && taxesForm.controls['type'].errors as formErrors">
+          <strong class="text-danger" *ngIf="formErrors['required']">Type field is required</strong><br>
+        </div>
+      </div>
+      <div class="col-md-3 form-group">
+        <label>Amount <strong class="text-danger">*</strong></label>
+        <input type="number" nz-input min="1" step="0.01" required formControlName="amount">
+        <div class="error mt-2" *ngIf="(taxesForm.controls['amount'].touched || taxesForm.controls['amount'].dirty) && taxesForm.controls['amount'].errors as formErrors">
+          <strong class="text-danger" *ngIf="formErrors['required']">Amount field is required</strong><br>
+        </div>
+      </div>
+      <div class="col-md-3 mt-3">
+        <button class="btn btn-success shadow mt-1">Submit Tax</button>
+      </div>
+    </form>
+  </div>
+</nz-card>

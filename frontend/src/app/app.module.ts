@@ -27,7 +27,6 @@ import {
 } from "ngx-ui-loader";
 import {NzAlertComponent} from "ng-zorro-antd/alert";
 import {AuthModule} from "./auth/auth.module";
-import { TaxComponent } from './dashboard/components/tax/tax.component';
 
 registerLocaleData(en);
 
@@ -46,7 +45,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AppComponent,
     SidebarComponent,
     DashboardComponent,
-    TaxComponent
   ],
   imports: [
     BrowserModule,
