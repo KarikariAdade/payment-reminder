@@ -6,27 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="d673cbe8-d034-43b3-88e0-0c28c2852036" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a212c4af-c13b-47f2-aa89-9927391736ca.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a212c4af-c13b-47f2-aa89-9927391736ca.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/ee343542-e501-43ac-a553-d210d123d00f.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/ee343542-e501-43ac-a553-d210d123d00f.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/authentication.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authentication.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/payments.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/payments.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/taxes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/taxes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/auth/auth.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/auth/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/auth/login/login.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/auth/register/register.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/auth/register/register.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/auth/register/register.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/auth/register/register.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/layouts/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/layouts/sidebar/sidebar.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/services/config.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/services/config.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/services/register/register.service.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/services/register/register.service.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/dashboard/components/tax/tax.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/dashboard/components/tax/tax.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/dashboard/components/tax/tax.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/dashboard/components/tax/tax.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/dashboard/components/tax/tax.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/dashboard/components/tax/tax.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/dashboard/dashboard.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/dashboard/dashboard.module.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +25,13 @@
       <list>
         <option value="TypeScript File" />
       </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
     </option>
   </component>
   <component name="Git.Settings">
@@ -59,28 +53,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/Node/payment-reminder/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "D:\\Projects\\Node\\payment-reminder\\backend\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/Node/payment-reminder/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\Projects\\Node\\payment-reminder\\backend\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql",
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -109,55 +103,79 @@
       <workItem from="1723410500108" duration="53000" />
       <workItem from="1723595322361" duration="3074000" />
       <workItem from="1723895417662" duration="1175000" />
-      <workItem from="1723900690454" duration="19433000" />
+      <workItem from="1723900690454" duration="22252000" />
+      <workItem from="1724102907233" duration="3844000" />
+      <workItem from="1724540153399" duration="495000" />
+      <workItem from="1724614789063" duration="124000" />
+      <workItem from="1725120066489" duration="7394000" />
+      <workItem from="1725199294726" duration="657000" />
+      <workItem from="1725203705863" duration="1017000" />
+      <workItem from="1725224252649" duration="2124000" />
+      <workItem from="1725314304241" duration="200000" />
+      <workItem from="1725396804240" duration="2093000" />
+      <workItem from="1725443066006" duration="1211000" />
+      <workItem from="1725566415567" duration="341000" />
+      <workItem from="1726446231872" duration="659000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="WfRunsListSearchHistory">{
-  &quot;history&quot;: [
+  <component name="WfRunsListSearchHistory"><![CDATA[{
+  "history": [
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
     },
     {
-      &quot;branch&quot;: &quot;master&quot;,
-      &quot;currentBranchFilter&quot;: true
+      "branch": "master",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "master",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "master",
+      "currentBranchFilter": true
+    },
+    {
+      "branch": "master",
+      "currentBranchFilter": true
     }
   ],
-  &quot;lastFilter&quot;: {
-    &quot;branch&quot;: &quot;master&quot;,
-    &quot;currentBranchFilter&quot;: true
+  "lastFilter": {
+    "branch": "master",
+    "currentBranchFilter": true
   }
-}</component>
+}]]></component>
 </project>

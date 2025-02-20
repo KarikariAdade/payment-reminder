@@ -1,5 +1,0 @@
-<nz-breadcrumb class="mb-4">
-  <nz-breadcrumb-item><a routerLink="/dashboard">Home</a></nz-breadcrumb-item>
-  <nz-breadcrumb-item *ngIf="mainPages"><a routerLink="/{{mainPages.url}}">{{ mainPages.name}}</a></nz-breadcrumb-item>
-  <nz-breadcrumb-item *ngIf="subPages"><a routerLink="/{{subPage.url}}" *ngFor="let subPage of subPages">{{ subPage.name }}</a></nz-breadcrumb-item>
-</nz-breadcrumb>
