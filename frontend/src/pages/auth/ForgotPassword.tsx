@@ -1,7 +1,123 @@
 import {useNavigate} from "react-router-dom";
+import {Input} from "/src/components/Input.tsx";
+import React, {useState} from "react";
+import {Button} from "/src/components/Button.tsx";
+import {displayMessage, validEmail} from "/src/utils/Reusables.ts";
+import axios from "axios";
 
 export const ForgotPassword = () => {
     const navigate = useNavigate()
+
+    const [forgotPasswordState, setForgotPasswordState] = useState({email: ''})
+
+    const [otpFormState, setOtpFormState] = useState({otp: ''})
+
+    const [passwordOtpUrl, setPasswordOtpUrl] = useState({
+        url: '',
+        token: ''
+    })
+
+    const [errors, setErrors] = useState({
+        email: '',
+        otp: '',
+    })
+
+    const [otpActive, setOtpActive] = useState(false);
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleInputChange = (e) => {
+        const {name, value} = e.target
+
+        console.log('name', name, 'value', value)
+        setErrors({...errors, [name]: ""});
+
+        setForgotPasswordState((prevData) => ({...prevData, [name]: value}))
+
+        setOtpFormState((otpData) => ({...otpData, [name]: value}))
+    }
+
+    const validateFields = () => {
+
+        let newErrors = {email: '', otp: ''},
+            hasErrors = false;
+
+        if (!validEmail.test(forgotPasswordState.email)) {
+            newErrors.email = "Invalid email address"
+            hasErrors = true
+        }
+
+        if (otpActive && otpFormState.otp.trim().length < 4) {
+            console.log('otp issue')
+            newErrors.otp = "OTP should be at least 6 digits"
+            hasErrors = true
+        }
+
+        setErrors(newErrors)
+
+        return hasErrors;
+    }
+
+    const submitForgotPasswordForm = async (event) => {
+        event.preventDefault()
+        setIsLoading(true)
+
+        if (validateFields()) {
+
+            setIsLoading(false)
+
+            return false
+
+        }
+
+        await axios.post(`${import.meta.env.VITE_API_URL}/auth/password/forgot`, forgotPasswordState)
+            .then((response) => {
+                displayMessage('success', response.data.message)
+
+                const resetUrl = response.data.data.url
+
+                setPasswordOtpUrl((prevState) => ({...prevState, url: resetUrl}))
+
+                console.log(response.data.data.url)
+
+                console.log('password url', passwordOtpUrl)
+                setOtpActive(true)
+            })
+            .catch((errors) => {
+                displayMessage('error', errors)
+
+                console.log('errors')
+
+            })
+
+        setIsLoading(false)
+    }
+
+    const submitOtpForm = async (event) => {
+        event.preventDefault();
+        if (validateFields()) {
+
+            setIsLoading(false)
+
+            return false
+
+        }
+
+        console.log(passwordOtpUrl.url)
+
+        await axios.post(passwordOtpUrl.url, otpFormState)
+            .then((response) => {
+
+                setPasswordOtpUrl((prevState) => ({...prevState, token: response.data.data.token}))
+            })
+            .catch((errors) => {
+                displayMessage('error', errors)
+
+                console.log('errors')
+
+            })
+        console.log('fuck otp', otpFormState)
+    }
     return (
         <>
             <section className="bg-white">
@@ -42,40 +158,75 @@ export const ForgotPassword = () => {
                                 quibusdam aperiam voluptatum.
                             </p>
 
-                            <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+                            {
+                                !otpActive ? (
+                                    <>
+                                        <form action="#" method='POST' onSubmit={submitForgotPasswordForm}
+                                              className="mt-8 grid grid-cols-6 gap-6">
 
-                                <div className='col-span-6 sm:col-span-4'>
-                                    <label htmlFor="email"
-                                           className="relative block rounded-md border border-gray-200 shadow-xs focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden h-12 p-2"
-                                            placeholder="Email"
-                                        />
-
-                                        <span
-                                            className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-                                            Email Address
-                                        </span>
-                                    </label>
-                                </div>
+                                            <Input
+                                                type='text'
+                                                id='email'
+                                                label='Email Address'
+                                                placeholder='Email Address'
+                                                name='email'
+                                                classname='col-span-6 sm:col-span-4'
+                                                value={forgotPasswordState.email}
+                                                onChange={handleInputChange}
+                                                errorMsg={errors.email}
+                                            />
 
 
-                                <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                                    <button
-                                        className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:ring-3 focus:outline-hidden"
-                                    >
-                                        Reset Password
-                                    </button>
+                                            <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+                                                <Button
+                                                    defaultText='Reset Password'
+                                                    btnClass='inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:ring-3 focus:outline-hidden cursor-pointer'
+                                                    type='submit'
+                                                    isLoading={isLoading}
+                                                    icon=''
+                                                />
 
-                                    <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                                        Remembered Password?
-                                        <span onClick={() => navigate('/auth/login')}
-                                              className="text-blue-700 font-bold cursor-pointer"> Log In</span>.
-                                    </p>
-                                </div>
-                            </form>
+                                                <p className="mt-4 text-sm text-gray-500 sm:mt-0">
+                                                    Remembered Password?
+                                                    <span onClick={() => navigate('/auth/login')}
+                                                          className="text-blue-700 font-bold cursor-pointer"> Log In</span>.
+                                                </p>
+                                            </div>
+                                        </form>
+                                    </>
+                                ) : (
+                                    <>
+                                        <form action="#" method='POST' onSubmit={submitOtpForm}
+                                              className="mt-8 grid grid-cols-6 gap-6">
+
+                                            <Input
+                                                type='number'
+                                                id='otp'
+                                                label='OTP'
+                                                placeholder='OTP'
+                                                name='otp'
+                                                classname='col-span-6 sm:col-span-4'
+                                                value={otpFormState.otp}
+                                                onChange={handleInputChange}
+                                                errorMsg={errors.otp}
+                                            />
+
+
+                                            <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
+                                                <Button
+                                                    defaultText='Submit OTP'
+                                                    btnClass='inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:ring-3 focus:outline-hidden cursor-pointer'
+                                                    type='submit'
+                                                    isLoading={isLoading}
+                                                    icon=''
+                                                />
+                                            </div>
+                                        </form>
+                                    </>
+                                )
+                            }
+
+
                         </div>
                     </main>
                 </div>

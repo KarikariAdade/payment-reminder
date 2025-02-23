@@ -1,36 +1,101 @@
 import {useNavigate} from "react-router-dom";
 import {Input} from "/src/components/Input.tsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Button} from "/src/components/Button.tsx";
+import {routes} from "/src/utils/Routes.ts";
+import {displayMessage, validEmail} from "/src/utils/Reusables.ts";
+import {toast} from "react-toastify";
+import axios from "axios";
+import {AuthContext} from "/src/context/AuthContext.tsx";
 
 export const Login = () => {
 
     const navigate = useNavigate()
 
+    const {setUser, setToken} = useContext(AuthContext);
 
-    const [formState, setFormState] = useState(
+    const [loginState, setLoginState] = useState(
         {
             email: '',
             password: ''
         }
     )
 
-    const btnClick = () => {
-        return !isLoading
+    const [errors, setErrors] = useState({
+        email: '',
+        password: ''
+    })
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        setIsLoading(true)
+
+        if (validateFields()) {
+
+            toast.error('Fill all form fields before submitting')
+
+            setIsLoading(false)
+
+            return false
+
+        }
+
+        const url = import.meta.env.VITE_API_URL + '/auth/login'
+        await axios.post(url, loginState)
+            .then((response) => {
+
+                const loggedInUser = response.data.data.user;
+                const loggedInUserToken = response.data.data.token
+
+                localStorage.setItem('user', JSON.stringify(loggedInUser))
+                localStorage.setItem('token', loggedInUserToken)
+
+                setUser(loggedInUser)
+                setToken(loggedInUserToken)
+                // navigate(routes.DASHBOARD)
+
+                // console.log(loggedInUser, 'loggedin user', 'data', response.data.data)
+                setIsLoading(false)
+            })
+            .catch((errors) => {
+                console.log('login errors', errors)
+                displayMessage('error', errors)
+                setIsLoading(false)
+            })
+
     }
 
-    const isLoading = false
+    const validateFields = () => {
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(formState, 'submit form state')
+        let newErrors = {name: '', email: '', password: '', confirmPassword: ''},
+            hasErrors = false;
+
+        if (loginState.password.trim().length < 1) {
+            newErrors.password = 'Password field is required'
+            hasErrors = true
+        }
+
+        if (!validEmail.test(loginState.email)) {
+            newErrors.email = "Invalid email address"
+            hasErrors = true
+        }
+
+        setErrors(newErrors)
+
+        return hasErrors;
+
     }
 
     const handleInputChange = (event) => {
 
         const {name, value} = event.target
 
-        setFormState((prevData) => ({...prevData, [name]: value}))
+        setErrors({...errors, [name]: ""});
+
+        setLoginState((prevData) => ({...prevData, [name]: value}))
 
     }
 
@@ -78,28 +143,32 @@ export const Login = () => {
 
                                 {/*id, classname = null, placeholder, label, name*/}
                                 <Input
+                                    type='email'
                                     id='email'
                                     label='Email Address'
                                     placeholder='Email Address'
                                     name='email'
                                     classname='col-span-6 sm:col-span-4'
-                                    value={formState.email}
+                                    value={loginState.email}
                                     onChange={handleInputChange}
+                                    errorMsg={errors.email}
                                 />
 
                                 <Input
+                                    type='password'
                                     id='password'
                                     label='Password'
                                     placeholder='Password'
                                     name='password'
                                     classname='col-span-6 sm:col-span-4'
-                                    value={formState.password}
+                                    value={loginState.password}
                                     onChange={handleInputChange}
+                                    errorMsg={errors.password}
                                 />
 
 
                                 <div className='col-span-4 sm:flexsm:gap-4 float-right'>
-                                    <small onClick={() => navigate('/auth/forgot/password')}
+                                    <small onClick={() => navigate(routes.FORGOT_PASSWORD)}
                                            className='float-right text-blue-700 font-medium cursor-pointer'>Forgot
                                         Password?</small>
                                 </div>
@@ -111,12 +180,11 @@ export const Login = () => {
                                         type='submit'
                                         isLoading={isLoading}
                                         icon=''
-                                        clickFunction={btnClick}
                                     />
 
                                     <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                                         Don't have an account?
-                                        <span onClick={() => navigate('/auth/register')}
+                                        <span onClick={() => navigate(routes.REGISTER)}
                                               className="text-gray-700 underline cursor-pointer">Register</span>.
                                     </p>
                                 </div>

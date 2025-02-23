@@ -1,8 +1,18 @@
 import {useNavigate} from "react-router-dom";
+import {routes} from "/src/utils/Routes.ts";
+import {useContext} from "react";
+import {AuthContext} from "/src/context/AuthContext.tsx";
 
 export const Sidebar = () => {
 
     const navigate = useNavigate()
+
+    const {logOut} = useContext(AuthContext)
+
+    const handleLogOut = () => {
+        logOut()
+        navigate(routes.LOGIN)
+    }
 
     return (
         <>
@@ -14,10 +24,10 @@ export const Sidebar = () => {
 
                     <ul className="mt-6 space-y-1">
                         <li>
-                            <a href="#"
-                               className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
-                                General
-                            </a>
+                            <span onClick={() => navigate(routes.DASHBOARD)}
+                                  className="block rounded-lg bg-gray-100 cursor-pointer px-4 py-2 text-sm font-medium text-gray-700">
+                                Dashboard
+                            </span>
                         </li>
 
                         <li>
@@ -54,14 +64,14 @@ export const Sidebar = () => {
                         </li>
 
                         <li>
-                            <a href="#"
-                               className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                                Billing
-                            </a>
+                            <span onClick={() => navigate(routes.PROFILE)}
+                                  className="block rounded-lg px-4 cursor-pointer py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                                Profile
+                            </span>
                         </li>
 
                         <li>
-                            <span onClick={() => navigate('/auth/login')}
+                            <span onClick={handleLogOut}
                                   className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                                 Log Out
                             </span>

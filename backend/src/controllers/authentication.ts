@@ -71,7 +71,14 @@ export const loginUser = async (req: Request, res: Response) => {
         const payload = {id: user.id, uuid: user.uuid},
             token = jwt.sign(payload, jwtSecret, {expiresIn: '1D'})
 
-        res.json(generateResponse('success', 'User logged in successfully', {user: user, token: token}))
+        const user_data = {
+            'name': user.name,
+            'email': user.email,
+            'id': user.id,
+            'uuid': user.uuid
+        }
+
+        res.json(generateResponse('success', 'User logged in successfully', {user: user_data, token: token}))
 
     } catch (err) {
 

@@ -2,6 +2,10 @@ import {useNavigate} from "react-router-dom";
 import {Input} from "/src/components/Input.tsx";
 import React, {useState} from "react";
 import {Button} from "/src/components/Button.tsx";
+import {displayMessage, validEmail} from "/src/utils/Reusables.ts";
+import {toast} from "react-toastify";
+import axios from "axios";
+import {routes} from "/src/utils/Routes.ts";
 
 export const Register = () => {
 
@@ -21,10 +25,7 @@ export const Register = () => {
         confirmPassword: ''
     })
 
-    const btnClick = () => {
-        return !isLoading
-    }
-    const isLoading = false
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
@@ -38,25 +39,67 @@ export const Register = () => {
 
     const validateFields = () => {
 
-        let newErrors = {name: '', email: '', password: '', confirmPassword: ''}
+        let newErrors = {name: '', email: '', password: '', confirmPassword: ''},
+            hasErrors = false;
 
         if (signUpState.name.trim().length < 3) {
             newErrors.name = 'Name must be at least 3 characters long'
+            hasErrors = true
         }
 
+        if (signUpState.password.trim().length < 8) {
+            newErrors.password = 'Password too short'
+            hasErrors = true
+        }
+
+        if (signUpState.password !== signUpState.confirmPassword) {
+            newErrors.confirmPassword = 'Passwords do not match'
+            hasErrors = true
+        }
+
+        if (!validEmail.test(signUpState.email)) {
+            newErrors.email = "Invalid email address"
+            hasErrors = true
+        }
 
         setErrors(newErrors)
 
-        console.log('new errors', errors)
+        return hasErrors;
+
     }
 
-    const submitRegistrationForm = (event) => {
+    const submitRegistrationForm = async (event) => {
         event.preventDefault();
 
-        validateFields();
+        setIsLoading(true)
 
-        console.log('sign up data', signUpState)
-        console.log('errorData', errors)
+        if (validateFields()) {
+
+            toast.error('Fill all form fields before submitting')
+
+            setIsLoading(false)
+
+            return false
+
+        }
+        const url = import.meta.env.VITE_API_URL + '/auth/register'
+
+        await axios.post(url, signUpState)
+            .then((response) => {
+
+                displayMessage('success', response.data.message)
+
+                navigate(routes.REGISTER)
+
+            })
+            .catch((errors) => {
+
+                displayMessage('error', errors)
+
+            })
+
+        setIsLoading(false)
+
     }
     return (
         <>
@@ -108,9 +151,9 @@ export const Register = () => {
                                     name='name'
                                     classname='col-span-6 sm:col-span-4'
                                     value={signUpState.name}
+                                    errorMsg={errors.name}
                                     onChange={handleInputChange}
                                 />
-                                {errors.name && <small className="text-red-500 text-sm">{errors.name}</small>}
 
                                 <Input
                                     type='email'
@@ -121,6 +164,7 @@ export const Register = () => {
                                     classname='col-span-6 sm:col-span-4'
                                     value={signUpState.email}
                                     onChange={handleInputChange}
+                                    errorMsg={errors.email}
                                 />
 
                                 <Input
@@ -132,6 +176,7 @@ export const Register = () => {
                                     classname='col-span-6 sm:col-span-4'
                                     value={signUpState.password}
                                     onChange={handleInputChange}
+                                    errorMsg={errors.password}
                                 />
 
                                 <Input
@@ -143,6 +188,7 @@ export const Register = () => {
                                     classname='col-span-6 sm:col-span-4'
                                     value={signUpState.confirmPassword}
                                     onChange={handleInputChange}
+                                    errorMsg={errors.confirmPassword}
                                 />
 
                                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
@@ -152,12 +198,11 @@ export const Register = () => {
                                         type='submit'
                                         isLoading={isLoading}
                                         icon=''
-                                        clickFunction={btnClick}
                                     />
 
                                     <p className="mt-4 text-sm text-gray-500 sm:mt-0">
                                         Already have an account?
-                                        <span onClick={() => navigate('/auth/login')}
+                                        <span onClick={() => navigate(routes.LOGIN)}
                                               className="font-medium underline cursor-pointer text-blue-700"> Log in</span>.
                                     </p>
                                 </div>

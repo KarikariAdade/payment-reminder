@@ -22,16 +22,10 @@ export const Button = ({
     else if (icon === 'edit')
         iconType = (<FontAwesomeIcon icon={faEdit}/>)
 
-    console.log(icon)
     return (
         <>
-            <button
-                onClick={clickFunction}
-                type={type}
-                className={btnClass}
-            >
+            <button onClick={clickFunction} type={type} className={btnClass} disabled={isLoading}>
                 {iconType}
-
 
                 {
                     isLoading ? "Processing..." : (defaultText)

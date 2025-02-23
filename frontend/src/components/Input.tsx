@@ -34,7 +34,7 @@ export const Input = ({
                                         </span>
                 </label>
                 {
-                    errorMsg !== '' ? (<small className="text-red-500 text-sm">This is the error message</small>) : null
+                    errorMsg !== '' ? (<small className="text-red-500 text-sm">{errorMsg}</small>) : null
                 }
 
             </div>
