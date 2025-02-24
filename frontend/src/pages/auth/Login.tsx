@@ -55,7 +55,7 @@ export const Login = () => {
 
                 setUser(loggedInUser)
                 setToken(loggedInUserToken)
-                // navigate(routes.DASHBOARD)
+                navigate(routes.DASHBOARD)
 
                 // console.log(loggedInUser, 'loggedin user', 'data', response.data.data)
                 setIsLoading(false)

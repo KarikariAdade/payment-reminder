@@ -23,7 +23,7 @@ export const Input = ({
                         id={id}
                         name={name}
                         value={value}
-                        className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden h-12 p-2"
+                        className="peer w-full border-none bg-transparent placeholder-transparent focus:border-transparent focus:ring-0 focus:outline-hidden h-12 p-2"
                         placeholder={placeholder}
                         onChange={onChange}
                     />

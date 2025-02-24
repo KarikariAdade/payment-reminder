@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import {Button} from "/src/components/Button.tsx";
 import {displayMessage, validEmail} from "/src/utils/Reusables.ts";
 import axios from "axios";
+import {routes} from "/src/utils/Routes.ts";
 
 export const ForgotPassword = () => {
     const navigate = useNavigate()
@@ -108,7 +109,11 @@ export const ForgotPassword = () => {
         await axios.post(passwordOtpUrl.url, otpFormState)
             .then((response) => {
 
-                setPasswordOtpUrl((prevState) => ({...prevState, token: response.data.data.token}))
+                const token = response.data.data.token;
+
+                setPasswordOtpUrl((prevState) => ({...prevState, token: token}))
+
+                navigate(`${routes.RESET_PASSWORD}/${token}`)
             })
             .catch((errors) => {
                 displayMessage('error', errors)

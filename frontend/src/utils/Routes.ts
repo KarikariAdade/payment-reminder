@@ -3,5 +3,10 @@ export const routes = {
     REGISTER: '/auth/register',
     FORGOT_PASSWORD: '/auth/forgot/password',
     DASHBOARD: '/dashboard',
-    PROFILE: '/profile'
+    PROFILE: '/profile',
+    RESET_PASSWORD: '/auth/reset/password',
+    CUSTOMER: '/customers',
+    TAX: '/taxes',
+    INVOICE: '/invoice',
+    PAYMENT: '/payment'
 }

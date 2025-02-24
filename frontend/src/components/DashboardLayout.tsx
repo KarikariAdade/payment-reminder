@@ -4,12 +4,11 @@ export const DashboardLayout = ({children}) => {
 
     return (
         <>
-            <div className="flex h-screen">
-                {/* Sidebar */}
+            <div>
                 <Sidebar/>
-
-                {/* Main content */}
-                <div className="flex-1 p-6 overflow-auto bg-gray-50">{children}</div>
+                <main className="py-10 lg:pl-72">
+                    <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+                </main>
             </div>
         </>
     )
